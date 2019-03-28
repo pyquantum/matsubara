@@ -29,6 +29,7 @@ def sum_of_exponentials(ck, vk, tlist):
 	y: array
 		A 1D array from a sum of exponentials.
     """
+    tlist = np.array(tlist)
     y = np.multiply(ck[0], np.exp(vk[0]*tlist))
     for p in range(1, len(ck)):
         y += np.multiply(ck[p], np.exp(vk[p]*tlist))
@@ -36,7 +37,10 @@ def sum_of_exponentials(ck, vk, tlist):
 
 
 def biexp_fit(tlist, ydata,
-              bounds=([0, -np.inf, 0, -np.inf], [10, 0, 10, 0]),
+			  ck_guess = [0.1, 0.5],
+			  vk_guess = [-0.5, -0.1],
+              bounds=([0, -np.inf, 0, -np.inf], [np.inf, 0, np.inf, 0]),
+              method='trf',
               loss='cauchy'):
     """
     Fits a bi-exponential function : ck[0] e^(-vk[0] t) + ck[1] e^(-vk[1] t)
@@ -50,22 +54,30 @@ def biexp_fit(tlist, ydata,
 	ydata: array
 		The values for each time.
 
+	guess: array
+		The initial guess for the parameters [ck, vk]
+
 	bounds: array of arrays
-		An array specifing the lower and upper bounds for each parameter.
+		An array specifing the lower and upper bounds for the parameters for
+		the amplitude and the two frequencies.
+
+	method, loss: str
+		One of the `scipy.least_sqares` method and loss.
 
 	Returns
 	-------
 	ck, vk: array
 		The array of coefficients and frequencies for the biexponential fit.
     """
-    mindata = np.min(ydata)
-    data = ydata/mindata
-    fun = lambda x, t, y: np.power(x[0]*np.exp(x[1]*t) + (1-x[0])*np.exp(x[2]*t) - y, 2)
-    x0 = [mindata/2, -.01, -.03]
+    mats_min = np.min(ydata)
+    data = ydata/mats_min
+    fun = lambda x, t, y: np.power(x[0]*np.exp(x[1]*t) + x[2]*np.exp(x[3]*t) - y, 2)
+    x0 = [0.5, -1, 0.5, -1]
+    # set the initial guess vector [ck1, ck2, vk1, vk2]
     params = least_squares(fun, x0, bounds=bounds, 
     	loss=loss, args=(tlist, data))
-    c1, v1, v2 = params.x
-    ck = mindata*np.array([c1, (1-c1)])
+    c1, v1, c2, v2 = params.x
+    ck = mats_min*np.array([c1, c2])
     vk = np.array([v1, v2])
     return ck, vk
 
