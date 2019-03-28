@@ -38,15 +38,10 @@ ck20, vk20 = biexp_fit(tlist, mats_data_zero)
 
 print("Coefficients:", ck1, ck20)
 print("Frequencies:", vk1, vk20)
-
-# Plotting the fit
-corr_fit = sum_of_exponentials(ck20, vk20, tlist)
-plt.plot(tlist, mats_data_zero, label="Analytical integral")
-plt.plot(tlist, corr_fit, label="Biexponential fit")
-plt.show()
 ```
 
 ```
 Coefficients: [0., 0.02] [-0.00020, -0.00010]
 Frequencies: [-0.025 + 0.99j, -0.025-0.99j] [-1.61 - 0.32]
 ```
+
