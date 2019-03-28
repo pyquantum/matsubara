@@ -6,7 +6,9 @@ import numpy as np
 from numpy.testing import (run_module_suite, assert_,
                            assert_array_almost_equal, assert_raises)
 from matsubara.correlation import (sum_of_exponentials, biexp_fit,
-                                   bath_correlation, underdamped_brownian)
+                                   bath_correlation, underdamped_brownian,
+                                   nonmatsubara_exponents, matsubara_exponents,
+                                   matsubara_zero_exponents, coth)
 
 
 def test_sum_of_exponentials():
@@ -76,6 +78,73 @@ def test_bath_correlation():
     sd = np.arange(0, 10, 2)
     assert_raises(TypeError, bath_correlation, [sd, tlist, [0.1], beta,
                                                 w_cutoff])
+
+
+def test_exponents():
+    """
+    correlation: Tests the Matsubara and non Matsubara exponents.
+    """
+    lam, gamma, w0 = 0.2, 0.05, 1.
+    tlist = np.linspace(0, 100, 1000)
+
+    # Finite temperature cases
+    beta = .1
+    N_exp = 200
+    ck_nonmats = [0.190164-0.004997j, 0.21017 +0.004997j]
+    vk_nonmats = [-0.025+0.999687j, -0.025-0.999687j]
+    ck1, vk1 = nonmatsubara_exponents(lam, gamma, w0, beta)
+
+    assert_array_almost_equal(ck1, ck_nonmats)
+    assert_array_almost_equal(vk1, vk_nonmats)
+
+    ck2, vk2 = matsubara_exponents(lam, gamma, w0, beta, N_exp)
+    corr_fit = sum_of_exponentials(np.concatenate([ck1, ck2]),
+                                   np.concatenate([vk1, vk2]), tlist)
+
+    corr = sum_of_exponentials(ck_nonmats, vk_nonmats, tlist)
+    max_residue = np.max(np.abs(corr_fit - corr))
+    max_amplitude = np.max(np.abs(corr))
+
+    assert_(max_residue < max_amplitude/1e5)
+
+    # Lower temperature
+    beta = 1.
+    N_exp = 100
+    ck_nonmats = [0.011636-0.00046j, 0.031643+0.00046j]
+    vk_nonmats = [-0.025+0.999687j, -0.025-0.999687j]
+    ck1, vk1 = nonmatsubara_exponents(lam, gamma, w0, beta)
+
+    assert_array_almost_equal(ck1, ck_nonmats)
+    assert_array_almost_equal(vk1, vk_nonmats)
+
+    ck2, vk2 = matsubara_exponents(lam, gamma, w0, beta, N_exp)
+    corr_fit = sum_of_exponentials(np.concatenate([ck1, ck2]),
+                                   np.concatenate([vk1, vk2]), tlist)
+
+    corr = sum_of_exponentials(ck_nonmats, vk_nonmats, tlist)
+    max_residue = np.max(np.abs(corr_fit - corr))
+    max_amplitude = np.max(np.abs(corr))
+
+    assert_(max_residue < max_amplitude/1e3)
+
+    # Zero temperature case
+    beta = np.inf
+    N_exp = 100
+    ck_nonmats = [0., 0.020006]
+    vk_nonmats = [-0.025+0.999687j, -0.025-0.999687j]
+    ck1, vk1 = nonmatsubara_exponents(lam, gamma, w0, beta)
+
+    assert_array_almost_equal(ck1, ck_nonmats)
+    assert_array_almost_equal(vk1, vk_nonmats)
+
+    ck2, vk2 = matsubara_exponents(lam, gamma, w0, beta, N_exp)
+    mats_data_zero = matsubara_zero_exponents(lam, gamma, w0, tlist)
+    ck_mats_zero = [-0.000208, -0.000107]
+    vk_mats_zero = [-1.613416, -0.329604]
+    ck20, vk20 = biexp_fit(tlist, mats_data_zero)
+
+    assert_array_almost_equal(ck20, ck_mats_zero)
+    assert_array_almost_equal(vk20, vk_mats_zero)
 
 
 if __name__ == "__main__":
