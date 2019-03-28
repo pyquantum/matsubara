@@ -348,3 +348,153 @@ def matsubara_zero_exponents(coup_strength, cav_broad, cav_freq, tlist):
     w0 = cav_freq
 
     return np.array([_matsubara_zero_integrand(t, coup_strength, gamma, w0) for t in tlist])
+
+
+def _S(w, coup_strength, cav_broad, cav_freq, beta):
+    """
+    Calculates the symmetric part of the spectrum for underdamped brownian motion
+    spectral density.
+    
+    Parameters
+    ----------
+    w: np.ndarray
+        A 1D numpy array of frequencies.
+    
+    coup_strength: float
+        The coupling strength parameter.
+
+    cav_broad: float
+        A parameter characterizing the FWHM of the spectral density, i.e.,
+        the cavity broadening.
+
+    cav_freq: float
+        The cavity frequency.
+
+    Returns
+    -------
+    integrated: float
+        The value of the integration at time "t".
+    """
+    lam = coup_strength
+    gamma = cav_broad
+    w0 = cav_freq
+
+    omega = np.sqrt(w0**2 - (gamma/2)**2)
+    a = omega + 1j*gamma/2.
+    aa = np.conjugate(a)
+    prefactor = -(lam**2)*gamma/(a**2 - aa**2)
+
+    t1 = coth(beta*(a/2))*(a/(a**2 - w**2))
+    t2 = coth(beta*(aa/2))*(aa/(aa**2 - w**2))
+    return prefactor*(t1 - t2)
+
+
+def _A(w, coup_strength, cav_broad, cav_freq, beta):
+    """
+    Calculates the anti-symmetric part of the spectrum for underdamped
+    Brownian motion spectral density.
+    
+    Parameters
+    ----------
+    w: np.ndarray
+        A 1D numpy array of frequencies.
+    
+    coup_strength: float
+        The coupling strength parameter.
+
+    cav_broad: float
+        A parameter characterizing the FWHM of the spectral density, i.e.,
+        the cavity broadening.
+
+    cav_freq: float
+        The cavity frequency.
+
+    Returns
+    -------
+    integrated: float
+        The value of the integration at time "t".
+    """
+    lam = coup_strength
+    gamma = cav_broad
+    w0 = cav_freq
+
+    omega = np.sqrt(w0**2 - (gamma/2)**2)
+    a = omega + 1j*gamma/2.
+    aa = np.conjugate(a)
+    prefactor = (lam**2)*gamma
+    t1 = (w/((a**2 - w**2)*((aa**2 - w**2))))
+    return prefactor*t1
+
+
+def spectrum_matsubara(w, coup_strength, cav_broad, cav_freq, beta):
+    """
+    Calculates the Matsubara part of the spectrum.
+    
+    Parameters
+    ----------
+    w: np.ndarray
+        A 1D numpy array of frequencies.
+    
+    coup_strength: float
+        The coupling strength parameter.
+
+    cav_broad: float
+        A parameter characterizing the FWHM of the spectral density, i.e.,
+        the cavity broadening.
+
+    cav_freq: float
+        The cavity frequency.
+
+    Returns
+    -------
+    integrated: float
+        The value of the integration at time "t".
+    """
+    lam = coup_strength
+    gamma = cav_broad
+    w0 = cav_freq
+    return -_S(w, lam, gamma, w0, beta) + _A(w, lam, gamma, w0, beta)*coth(beta*w/2)
+
+
+def spectrum_non_matsubara(w, coup_strength, cav_broad, cav_freq, beta):
+    """
+    Calculates the non Matsubara part of the spectrum.
+    
+    Parameters
+    ----------
+    w: np.ndarray
+        A 1D numpy array of frequencies.
+    
+    lam: float
+        The coupling strength parameter.
+
+    gamma: float
+        A parameter characterizing the FWHM of the spectral density.
+    
+    beta: float
+        Inverse temperature (1/kT) normalized to qubit frequency.
+        deafult: inf
+    """
+    return _S(w, lam, gamma, w0, beta) + _A(w, lam, gamma, w0, beta)
+
+
+def S(w, coup_strength, cav_broad, cav_freq, beta):
+    """
+    Calculates the full spectrum for the spectral density.
+
+    Parameters
+    ----------
+    w: np.ndarray
+        A 1D numpy array of frequencies.
+    
+    lam: float
+        The coupling strength parameter.
+
+    gamma: float
+        A parameter characterizing the FWHM of the spectral density.
+    
+    beta: float
+        Inverse temperature (1/kT) normalized to qubit frequency.
+        deafult: inf
+    """
+    return spectrum_matsubara(w, lam, gamma, w0, beta) + spectrum_non_matsubara(w, lam, gamma, w0, beta)
