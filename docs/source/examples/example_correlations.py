@@ -1,21 +1,25 @@
 """
-Examples to calculate Matsubara and Non-matsubara correlations for
-the underdamped brownian motion spectral density
+Calculate Matsubara and Non-matsubara correlations for the underdamped
+brownian motion spectral density.
 """
+import numpy as np
 from matsubara.correlation import (nonmatsubara_exponents,
-                                   matsubara_zero_exponents,
+                                   matsubara_zero_analytical,
                                    biexp_fit, sum_of_exponentials)
+import matplotlib.pyplot as plt
+
 
 coup_strength, cav_broad, cav_freq = 0.2, 0.05, 1.
 tlist = np.linspace(0, 100, 1000)
 
 # Zero temperature case beta = 1/kT
 beta = np.inf
-ck1, vk1 = nonmatsubara_exponents(lam, gamma, w0, beta)
+ck1, vk1 = nonmatsubara_exponents(coup_strength, cav_broad, cav_freq, beta)
 corr_nonmats = sum_of_exponentials(1j*ck1, vk1, tlist)
 
 # Analytical zero temperature calculation of the Matsubara correlation
-mats_data_zero = matsubara_zero_exponents(lam, gamma, w0, tlist)
+mats_data_zero = matsubara_zero_analytical(coup_strength, cav_broad,
+										   cav_freq, tlist)
 
 # Fitting a biexponential function
 ck20, vk20 = biexp_fit(tlist, mats_data_zero)
