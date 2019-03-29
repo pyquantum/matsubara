@@ -453,7 +453,8 @@ def spectrum_matsubara(w, coup_strength, cav_broad, cav_freq, beta):
     lam = coup_strength
     gamma = cav_broad
     w0 = cav_freq
-    return -_S(w, lam, gamma, w0, beta) + _A(w, lam, gamma, w0, beta)*coth(beta*w/2)
+    return (-_S(w, coup_strength, cav_broad, cav_freq, beta) \
+        + _A(w, coup_strength, cav_broad, cav_freq, beta)*coth(beta*w/2))
 
 
 def spectrum_non_matsubara(w, coup_strength, cav_broad, cav_freq, beta):
@@ -475,10 +476,11 @@ def spectrum_non_matsubara(w, coup_strength, cav_broad, cav_freq, beta):
         Inverse temperature (1/kT) normalized to qubit frequency.
         deafult: inf
     """
-    return _S(w, lam, gamma, w0, beta) + _A(w, lam, gamma, w0, beta)
+    return (_S(w, coup_strength, cav_broad, cav_freq, beta) \
+        + _A(w, coup_strength, cav_broad, cav_freq, beta))
 
 
-def S(w, coup_strength, cav_broad, cav_freq, beta):
+def spectrum(w, coup_strength, cav_broad, cav_freq, beta):
     """
     Calculates the full spectrum for the spectral density.
 
@@ -497,4 +499,5 @@ def S(w, coup_strength, cav_broad, cav_freq, beta):
         Inverse temperature (1/kT) normalized to qubit frequency.
         deafult: inf
     """
-    return spectrum_matsubara(w, lam, gamma, w0, beta) + spectrum_non_matsubara(w, lam, gamma, w0, beta)
+    return (spectrum_matsubara(w, coup_strength, cav_broad, cav_freq, beta) \
+        + spectrum_non_matsubara(w, coup_strength, cav_broad, cav_freq, beta))

@@ -8,7 +8,9 @@ from numpy.testing import (run_module_suite, assert_,
 from matsubara.correlation import (sum_of_exponentials, biexp_fit,
                                    bath_correlation, underdamped_brownian,
                                    nonmatsubara_exponents, matsubara_exponents,
-                                   matsubara_zero_exponents, coth)
+                                   matsubara_zero_exponents, coth,
+                                   spectrum, spectrum_matsubara,
+                                   spectrum_non_matsubara, _S, _A)
 
 
 def test_sum_of_exponentials():
@@ -145,6 +147,51 @@ def test_exponents():
 
     assert_array_almost_equal(ck20, ck_mats_zero)
     assert_array_almost_equal(vk20, vk_mats_zero)
+
+
+def test_spectrum():
+    """
+    correlation: Tests the Matsubara and non Matsubara spectrum.
+    """
+    cav_freq = 1.
+    cav_broad = 0.5
+    coup_strength = 1
+
+    # High temperature case
+    beta = 0.01
+    w = np.linspace(-5, 10, 200)
+    s_matsu = spectrum_matsubara(w, coup_strength, cav_broad, cav_freq, beta)
+    s_full = spectrum(w, coup_strength, cav_broad, cav_freq, beta)
+    s_nonmatsu = spectrum_non_matsubara(w, coup_strength,
+                                        cav_broad, cav_freq,
+                                        beta)
+    s_nonmatsu_neg = spectrum_non_matsubara(-w, coup_strength,
+                                            cav_broad, cav_freq,
+                                            beta)
+    assert_array_almost_equal(s_full, s_nonmatsu)
+
+    # Effective temperature
+    div = np.divide(s_nonmatsu, s_nonmatsu_neg)
+    log = np.log(div)
+    effective_temperature = log/(w*beta)
+    assert_array_almost_equal(effective_temperature, np.ones_like(w))
+    # Low temperature case
+    beta = 100
+    w = np.linspace(-5, 10, 200)
+    s_matsu = spectrum_matsubara(w, coup_strength, cav_broad, cav_freq, beta)
+    s_full = spectrum(w, coup_strength, cav_broad, cav_freq, beta)
+    s_nonmatsu = spectrum_non_matsubara(w, coup_strength,
+                                        cav_broad, cav_freq,
+                                        beta)
+    residue = np.abs(s_full - s_nonmatsu)
+    assert_(residue.all() != 0.)
+    
+    # Effective temperature
+    div = np.divide(s_nonmatsu, s_nonmatsu_neg)
+    log = np.log(div)
+    effective_temperature = log/(w*beta)
+    residue = np.abs(effective_temperature - np.ones_like(w))
+    assert_(residue.all() != 0.)
 
 
 if __name__ == "__main__":
