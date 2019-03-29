@@ -17,7 +17,7 @@ from qutip import liouvillian, mat2vec, state_number_enumerate
 from qutip.cy.spmatfuncs import cy_ode_rhs
 from qutip.solver import Options, Result, Stats
 
-from scipy.misc import factorial
+from scipy.special import factorial
 from scipy.sparse import lil_matrix
 from scipy.integrate import ode
 

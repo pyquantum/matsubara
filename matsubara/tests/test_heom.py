@@ -8,7 +8,7 @@ from numpy.testing import (run_module_suite, assert_,
 from matsubara.correlation import (sum_of_exponentials, biexp_fit,
                                    bath_correlation, underdamped_brownian,
                                    nonmatsubara_exponents, matsubara_exponents,
-                                   matsubara_zero_exponents, coth)
+                                   matsubara_zero_analytical, coth)
 from qutip.operators import sigmaz, sigmax
 from qutip import basis, expect
 from qutip.solver import Options, Result, Stats
@@ -39,7 +39,7 @@ def test_heom():
     options = Options(nsteps=1500, store_states=True, atol=1e-12, rtol=1e-12)
 
     ck1, vk1 = nonmatsubara_exponents(lam, gamma, w0, beta)
-    mats_data_zero = matsubara_zero_exponents(lam, gamma, w0, tlist)
+    mats_data_zero = matsubara_zero_analytical(lam, gamma, w0, tlist)
     ck20, vk20 = biexp_fit(tlist, mats_data_zero)
 
     hsolver = HeomUB(Hsys, Q, lam_coeff, np.concatenate([ck1, ck20]),

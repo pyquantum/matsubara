@@ -319,7 +319,7 @@ def _matsubara_zero_integrand(t, coup_strength, cav_broad, cav_freq):
     return quad(integrand, 0.0, np.inf)[0]
 
 
-def matsubara_zero_exponents(coup_strength, cav_broad, cav_freq, tlist):
+def matsubara_zero_analytical(coup_strength, cav_broad, cav_freq, tlist):
     """
     Calculates the analytical zero temperature value for Matsubara exponents.
 

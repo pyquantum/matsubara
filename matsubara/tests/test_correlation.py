@@ -8,7 +8,7 @@ from numpy.testing import (run_module_suite, assert_,
 from matsubara.correlation import (sum_of_exponentials, biexp_fit,
                                    bath_correlation, underdamped_brownian,
                                    nonmatsubara_exponents, matsubara_exponents,
-                                   matsubara_zero_exponents, coth,
+                                   matsubara_zero_analytical, coth,
                                    spectrum, spectrum_matsubara,
                                    spectrum_non_matsubara, _S, _A)
 
@@ -140,7 +140,7 @@ def test_exponents():
     assert_array_almost_equal(vk1, vk_nonmats)
 
     ck2, vk2 = matsubara_exponents(lam, gamma, w0, beta, N_exp)
-    mats_data_zero = matsubara_zero_exponents(lam, gamma, w0, tlist)
+    mats_data_zero = matsubara_zero_analytical(lam, gamma, w0, tlist)
     ck_mats_zero = [-0.000208, -0.000107]
     vk_mats_zero = [-1.613416, -0.329604]
     ck20, vk20 = biexp_fit(tlist, mats_data_zero)
