@@ -18,8 +18,9 @@ Numpy, Scipy and QuTiP are required. Install them with conda if you do not alrea
 conda install -c conda-forge numpy scipy qutip
 ```
 
-# Example
-Computing the Matsubara and non Matsubara modes.
+# Examples
+In `matsubara/docs/source/examples/` there are several examples from the paper which can be easily
+reproduced. The basic calcalation of the Matsubara and non Matsubara modes can be done in the following way:
 ```python
 from matsubara.correlation import (nonmatsubara_exponents,
                                    matsubara_zero_exponents,
