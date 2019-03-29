@@ -15,7 +15,7 @@ python setup.py develop
 ```
 Numpy, Scipy and QuTiP are required. Install them with conda if you do not already have them using
 ```
-conda install -c numpy scipy qutip
+conda install -c conda-forge numpy scipy qutip
 ```
 
 # Example
