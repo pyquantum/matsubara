@@ -18,12 +18,8 @@ w = np.linspace(-5, 10, 200)
 matsu_spectrum = spectrum_matsubara(w, coup_strength, cav_broad, cav_freq, beta)
 total_spectrum = spectrum(w, coup_strength, cav_broad, cav_freq, beta)
 
-nonmatsu_spectrum = spectrum_non_matsubara(w, coup_strength,
-										   cav_broad, cav_freq,
-										   beta)
-nonmatsu_spectrum_neg = spectrum_non_matsubara(-w, coup_strength,
-												cav_broad, cav_freq,
-												beta)
+nonmatsu_spectrum = spectrum_non_matsubara(w, coup_strength, cav_broad, cav_freq, beta)
+nonmatsu_spectrum_neg = spectrum_non_matsubara(-w, coup_strength, cav_broad, cav_freq, beta)
 
 # Effective temperature
 log = np.log(nonmatsu_spectrum/nonmatsu_spectrum_neg)
@@ -51,12 +47,8 @@ w = np.linspace(-5, 10, 200)
 matsu_spectrum = spectrum_matsubara(w, coup_strength, cav_broad, cav_freq, beta)
 total_spectrum = spectrum(w, coup_strength, cav_broad, cav_freq, beta)
 
-nonmatsu_spectrum = spectrum_non_matsubara(w, coup_strength,
-										   cav_broad, cav_freq,
-										   beta)
-nonmatsu_spectrum_neg = spectrum_non_matsubara(-w, coup_strength,
-												cav_broad, cav_freq,
-												beta)
+nonmatsu_spectrum = spectrum_non_matsubara(w, coup_strength, cav_broad, cav_freq, beta)
+nonmatsu_spectrum_neg = spectrum_non_matsubara(-w, coup_strength, cav_broad, cav_freq, beta)
 
 # Effective temperature
 log = np.log(nonmatsu_spectrum/nonmatsu_spectrum_neg)
