@@ -67,8 +67,8 @@ lam3 =1.0j*np.sqrt(-ck20[0])
 lam4 =1.0j*np.sqrt(-ck20[1])
 
 Hsys = 0.5*wq*sz + 0.5*delta*sx + omega*a.dag()*a + lam2*sx*(a + a.dag())
-Hsys = Hsys + lam3*sx*(b+b.dag())*(1j/np.sqrt(2))
-Hsys = Hsys + lam4*sx*(c + c.dag())*(1j/np.sqrt(2))
+Hsys = Hsys + lam3*sx*(b+b.dag())
+Hsys = Hsys + lam4*sx*(c + c.dag())
 
 psi0 = tensor(initial_ket, basis(Ncav,0), basis(Ncav,0), basis(Ncav,0))
 c_ops = [np.sqrt(cav_broad)*a, np.sqrt(-2*vk20[0])*b, np.sqrt(-2*vk20[1])*c]
@@ -76,8 +76,8 @@ e_ops = [sz, ]
 pseudomode_with_mats = mesolve(Hsys, psi0, tlist, c_ops, e_ops, options=options)
 output2 = (pseudomode_with_mats.expect[0] + 1)/2
 
-plt.plot(tlist, output2, color="b", label="Psuedomode (Matsubara)")
-plt.plot(tlist, output, color="r", label="Psuedomode (no Matsubara)")
+plt.plot(tlist, output2, color="r", label="Psuedomode (Matsubara)")
+plt.plot(tlist, output, color="b", label="Psuedomode (no Matsubara)")
 plt.xlabel("t ($1/\omega_0$)")
 plt.ylabel(r"$\langle 1 | \rho | 1 \rangle$")
 plt.legend()
