@@ -1,13 +1,22 @@
+#########################
 Matsubara: a QuTiP plugin
-=========================
-Virtual excitations in the ultra-strongly-coupled spin-boson model: physical results from unphysical modes
+#########################
 
-Neill Lambert, Shahnawaz Ahmed, Mauro Cirio, Franco Nori
-[arXiv:1903.05892](arXiv:1903.05892)
+A QuTiP plugin to study the spin-boson model in the Ultra-Strong Coupling limit at zero temperation. We provide the code to reproduce the results in :cite:`lambert2019virtual`.
+
 
 .. toctree::
    :maxdepth: 3
 
    intro
+   install
    correlations
-   module
+   heom
+   pseudomode
+   rc
+   pure_dephasing
+   virtualphotons
+   bib
+   modules
+
+.. bibliography:: bibliography/main.bib
