@@ -47,4 +47,4 @@ print("Frequencies:", vk1, vk20)
 Coefficients: [0., 0.02] [-0.00020, -0.00010]
 Frequencies: [-0.025 + 0.99j, -0.025-0.99j] [-1.61 - 0.32]
 ```
-![](docs/source/images/matsfitting.png)
+![](docs/source/examples/plots/matsfitting.png)

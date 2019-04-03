@@ -151,7 +151,7 @@ def _heom_number_enumerate(dims, excitations=None, state=None, idx=0):
                 yield s
 
 
-class HeomUB(object):
+class HeomUB():
     """
     The Heom class to tackle Heirarchy using the underdamped Brownian motion
 
@@ -173,11 +173,11 @@ class HeomUB(object):
         The list of frequencies in the expansion of the correlation function
 
     ncut: int
-        The hierarchy cutoff.
+        The hierarchy cutoff
 
 	beta: float
 		Inverse temperature, 1/kT. At zero temperature, beta is inf and we use
-		an optimization for the non Matsubara terms.
+		an optimization for the non Matsubara terms
     """
 
     def __init__(self, hamiltonian, coupling, coup_strength,

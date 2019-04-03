@@ -119,16 +119,18 @@ def underdamped_brownian(w, coup_strength, cav_broad, cav_freq):
 
 
 def bath_correlation(spectral_density, tlist, params, beta, w_cut):
-    """
+    r"""
     Calculates the bath correlation function (C) for a specific spectral
     density (J(w)) for an environment modelled as a bath of harmonic
     oscillators. If :math: `\beta` is the inverse temperature of the bath
     then the correlation is:
 
-    :math:`C(t) = \frac{1}{\pi} \left[\int_{0}^{\infty} \coth
-    (\beta \omega /2) \cos(\omega t) - i\sin(\omega t) \right]`
+    .. math::
 
-    where :math: `\beta = 1/kT` with T as the bath temperature and k as
+        C(t) = \frac{1}{\pi} \int_{0}^{\infty} 
+        \coth(\beta \omega /2) \cos(\omega t) - i\sin(\omega t)
+
+    where :math:`\beta = 1/kT` with T as the bath temperature and k as
     the Boltzmann's constant. If the temperature is zero, `beta` goes to
     infinity and we can replace the coth(x) term in the correlation
     function's real part with 1. At higher temperatures the coth(x)
@@ -139,6 +141,7 @@ def bath_correlation(spectral_density, tlist, params, beta, w_cut):
     to the numerical integration.
 
     Assumptions:
+
         1. The bath is in a thermal state at a given temperature.
         2. The initial state of the environment is Gaussian.
         3. Bath operators are in a product state with the system intially.
