@@ -21,6 +21,7 @@ delta = 0.
 beta = np.inf
 coup_strength, cav_broad, cav_freq = 0.2, 0.05, 1.
 tlist = np.linspace(0, 200, 1000)
+Ncav = 4
 
 mats_data_zero = matsubara_zero_analytical(coup_strength, cav_broad,
 										   cav_freq, tlist)
@@ -30,8 +31,6 @@ ck20, vk20 = biexp_fit(tlist, mats_data_zero)
 omega = np.sqrt(cav_freq**2 - (cav_broad/2.)**2)
 lam_renorm = coup_strength**2/(2*omega)
 
-
-Ncav = 25
 lam2 = np.sqrt(lam_renorm)
 
 # Construct the pseudomode operators with one extra underdamped pseudomode
@@ -53,8 +52,6 @@ output = (pseudomode_no_mats.expect[0] + 1)/2
 # Construct the pseudomode operators with three extra pseudomodes
 # One of the added modes is the underdamped pseudomode and the two extra are
 # the matsubara modes.
-Ncav = 4
-
 sx = tensor(sigmax(), qeye(Ncav), qeye(Ncav), qeye(Ncav))
 sm = tensor(destroy(2).dag(), qeye(Ncav), qeye(Ncav), qeye(Ncav))
 sz = tensor(sigmaz(), qeye(Ncav), qeye(Ncav), qeye(Ncav))
@@ -76,8 +73,8 @@ e_ops = [sz, ]
 pseudomode_with_mats = mesolve(Hsys, psi0, tlist, c_ops, e_ops, options=options)
 output2 = (pseudomode_with_mats.expect[0] + 1)/2
 
-plt.plot(tlist, output2, color="r", label="Psuedomode (Matsubara)")
 plt.plot(tlist, output, color="b", label="Psuedomode (no Matsubara)")
+plt.plot(tlist, output2, color="r", label="Psuedomode (Matsubara)")
 plt.xlabel("t ($1/\omega_0$)")
 plt.ylabel(r"$\langle 1 | \rho | 1 \rangle$")
 plt.legend()
