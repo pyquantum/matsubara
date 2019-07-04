@@ -18,20 +18,20 @@ import matplotlib.pyplot as plt
 Q = sigmax()
 wq = 1.
 delta = 0.
-coup_strength, cav_broad, cav_freq = 0.2, 0.05, 1.
+coup_strength, bath_broad, bath_freq = 0.2, 0.05, 1.
 tlist = np.linspace(0, 200, 1000)
 Nc = 9
 Hsys = 0.5 * wq * sigmaz() + 0.5 * delta * sigmax()
 initial_ket = basis(2, 1)
 rho0 = initial_ket*initial_ket.dag()
-omega = np.sqrt(cav_freq**2 - (cav_broad/2.)**2)
+omega = np.sqrt(bath_freq**2 - (bath_broad/2.)**2)
 options = Options(nsteps=1500, store_states=True, atol=1e-12, rtol=1e-12)
 
 # zero temperature case, renormalized coupling strength
 beta = np.inf
 lam_coeff = coup_strength**2/(2*(omega))
 
-ck1, vk1 = nonmatsubara_exponents(coup_strength, cav_broad, cav_freq, beta)
+ck1, vk1 = nonmatsubara_exponents(coup_strength, bath_broad, bath_freq, beta)
 
 # Ignore Matsubara
 hsolver2 = HeomUB(Hsys, Q, lam_coeff, ck1, -vk1, ncut=Nc)
@@ -40,7 +40,7 @@ heom_result_no_matsubara = (np.real(expect(output2.states, sigmaz())) + 1)/2
 
 
 # Add zero temperature Matsubara coefficients
-mats_data_zero = matsubara_zero_analytical(coup_strength, cav_broad, cav_freq,
+mats_data_zero = matsubara_zero_analytical(coup_strength, bath_broad, bath_freq,
 										   tlist)
 ck20, vk20 = biexp_fit(tlist, mats_data_zero)
 hsolver = HeomUB(Hsys, Q, lam_coeff, np.concatenate([ck1, ck20]),
