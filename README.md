@@ -2,9 +2,11 @@
 ## Virtual excitations in the ultra-strongly-coupled spin-boson model: physical results from unphysical modes
 Neill Lambert, Shahnawaz Ahmed, Mauro Cirio, Franco Nori
 
-The is the code to reproduce the results in [arXiv:1903.05892](arXiv:1903.05892). A special `matsubara.heom.HeomUB` class is provided to implement the Hierarchical Equations of Motion method adapted for the underdamped Brownian motion spectral density.
+The is the code to reproduce the results in [arXiv:1903.05892](https://arxiv.org/abs/1903.05892). A special `matsubara.heom.HeomUB` class is provided to implement the Hierarchical Equations of Motion method adapted for the underdamped Brownian motion spectral density.
 
 We focus on the zero temperature case where the correlation function can be expressed using four exponents.
+
+Documentation, installation instructions and several examples are available at: (matsubara.readthedocs.io)
 
 # Installation
 The code is in development and can be used by cloning the repository and performing an in-place installation using python.
