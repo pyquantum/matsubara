@@ -208,6 +208,7 @@ class HeomUB():
              total_nhe * self.N**2),
             dtype=np.complex)
         self.lam = coup_strength
+        self.full_hierarchy = []
 
     def populate(self, heidx_list):
         """
@@ -328,7 +329,7 @@ class HeomUB():
                 if prev_he and (prev_he in self.he2idx):
                     self.grad_prev(he_n, k, prev_he)
 
-    def solve(self, rho0, tlist, options=None, progress=None, store_full=True):
+    def solve(self, rho0, tlist, options=None, progress=None):
         """
         Solve the Hierarchy equations of motion for the given initial
         density matrix and time.
@@ -359,8 +360,7 @@ class HeomUB():
         r.set_initial_value(rho_he, tlist[0])
         dt = np.diff(tlist)
         n_tsteps = len(tlist)
-        if store_full:
-            full_hierarchy = []
+
         if progress:
             bar = progress(total=n_tsteps - 1)
         for t_idx, t in enumerate(tlist):
@@ -370,9 +370,8 @@ class HeomUB():
                 r0 = r1[0].reshape(self.N, self.N).T
                 output.states.append(Qobj(r0))
 
-                if store_full:
-                    r_heom = r.y.reshape(self.hshape)
-                    full_hierarchy.append(r_heom)
+                r_heom = r.y.reshape(self.hshape)
+                self.full_hierarchy.append(r_heom)
 
                 if progress:
                     bar.update()
