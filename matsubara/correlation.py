@@ -4,7 +4,7 @@ Correlations for the underdamped Brownian motion spectral density.
 
 
 import numpy as np
-from scipy.optimize import least_squares, curve_fit
+from scipy.optimize import least_squares
 from scipy.integrate import quad
 
 
@@ -81,88 +81,6 @@ def biexp_fit(tlist, ydata,
     vk = np.array([v1, v2])
     return ck, vk
 
-
-
-
-
-
-def biexp_fit_constrained(tlist, ydata, w, lam, gamma, w0,  
-              method='trf',
-              loss='cauchy',weight=1.):
-    """
-    Fits a bi-exponential function : ck[0] e^(-vk[0] t) + ck[1] e^(-vk[1] t)
-    using `scipy.optimize.curve_fit` with an additional constraint 
-    based on the fit giving positive power spectrum across a frequency range
-
-    Parameters
-    ----------
-    tlist: array
-        A list of time (x values).
-
-    ydata: array
-        The values for each time.
-    
-    w: linspace array of frequencise
-    
-    lam: coupling strength of the non-Matsubara term
-    
-    gamma: width of the non-Matsubara term
-    
-    w0: resonance of the non-Matsubara term
-
-    guess: array
-        The initial guess for the parameters [ck, vk]
-
-    method, loss: str
-        One of the `scipy.least_sqares` method and loss.
-        
-    weight: An optional weight for the cost function
-
-    Returns
-    -------
-    ck, vk: array
-        The array of coefficients and frequencies for the biexponential fit.
-    """
-   
-    data = ydata
-    
-    ck_guess, vk_guess = biexp_fit(tlist, data)
-    
-    def St(w,lam,gamma,w0):
-        Gam = gamma/2.
-        Om = np.sqrt(w0**2-Gam**2)
-        
-        return (lam**2/(2*Om))*2*(Gam)/((w-Om)**2+Gam**2)
-
-    def cost(w,a1,a2,f1,f2,lam,gamma,w0):
-        return 2*(a1)*f1/(w**2+f1**2) + 2*(a2)*f2/(w**2+f2**2) + St(w,lam,gamma,w0)
-    
-    def fun(x, a1, a2, f1, f2):
-        
-        penal = 0.
-        for wt in w:
-            if cost(wt,a1,a2,-f1,-f2,lam,gamma,w0)>0.:
-                penalt=0.
-            else: 
-                penalt=cost(wt,a1,a2,-f1,-f2,lam,gamma,w0)
-            penal+= penalt
-
-    
-        return a1*np.exp(f1*x) + a2*np.exp(f2*x) + abs(weight*penal)        
-
-    
-    
-    
-    p0 = [ck_guess[0], ck_guess[1],
-            vk_guess[0], vk_guess[1]]
-    params, pcov = curve_fit(fun, tlist, np.real(data), method="trf", p0=p0) 
-
-
-
-    c1, c2, v1, v2 = params
-    ck = np.array([c1, c2])
-    vk = np.array([v1, v2])
-    return ck, vk
 
 def underdamped_brownian(w, coup_strength, cav_broad, cav_freq):
     """
