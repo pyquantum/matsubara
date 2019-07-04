@@ -11,11 +11,11 @@ A QuTiP plugin to study the spin-boson model in the Ultra-Strong Coupling limit 
    intro
    install
    correlations
+   positivity_constraint
    heom
    pseudomode
    rc
    pure_dephasing
-   virtualphotons
    bib
    modules
 

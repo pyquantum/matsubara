@@ -40,4 +40,5 @@ plt.plot(tlist, pd_numerical_fitting, color="r", label = "Integral with exponene
 plt.xlabel("t")
 plt.ylabel(r"$\rho_{01}$($w_q = 0$)")
 plt.legend()
+plt.savefig("plots/pd.png", bbox_inches="tight")
 plt.show()

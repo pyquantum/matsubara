@@ -2,7 +2,7 @@
 Introduction
 ############
 
-We provide the code to reproduce the results in :cite:`lambert2019virtual`.
+We provide the code to reproduce the results in :cite:`lambert2019virtual` using QuTiP.
 
 The code is only for the zero temperature case where the correlation function can be expressed using four exponents - two non Matsubara contributions and a bi-exponential fitting of the infinite Matsubara sum. We will be extending it to a finite temperature case soon.
 
