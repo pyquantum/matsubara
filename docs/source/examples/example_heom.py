@@ -34,9 +34,9 @@ lam_coeff = coup_strength**2/(2*(omega))
 ck1, vk1 = nonmatsubara_exponents(coup_strength, bath_broad, bath_freq, beta)
 
 # Ignore Matsubara
-hsolver2 = HeomUB(Hsys, Q, lam_coeff, ck1, -vk1, ncut=Nc)
-output2 = hsolver2.solve(rho0, tlist, options)
-heom_result_no_matsubara = (np.real(expect(output2.states, sigmaz())) + 1)/2
+hsolver_no_matsubara = HeomUB(Hsys, Q, lam_coeff, ck1, -vk1, ncut=Nc)
+output_no_matsubara = hsolver_no_matsubara.solve(rho0, tlist, options)
+heom_result_no_matsubara = (np.real(expect(output_no_matsubara.states, sigmaz())) + 1)/2
 
 
 # Add zero temperature Matsubara coefficients
