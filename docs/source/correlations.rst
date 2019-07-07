@@ -11,17 +11,17 @@ Matsubara correlation
 	import matplotlib.pyplot as plt
 
 
-	coup_strength, cav_broad, cav_freq = 0.2, 0.05, 1.
+	coup_strength, bath_broad, bath_freq = 0.2, 0.05, 1.
 	tlist = np.linspace(0, 100, 1000)
 
 	# Zero temperature case beta = 1/kT
 	beta = np.inf
-	ck1, vk1 = nonmatsubara_exponents(coup_strength, cav_broad, cav_freq, beta)
+	ck1, vk1 = nonmatsubara_exponents(coup_strength, bath_broad, bath_freq, beta)
 	corr_nonmats = sum_of_exponentials(1j*ck1, vk1, tlist)
 
 	# Analytical zero temperature calculation of the Matsubara correlation
-	mats_data_zero = matsubara_zero_analytical(coup_strength, cav_broad,
-											   cav_freq, tlist)
+	mats_data_zero = matsubara_zero_analytical(coup_strength, bath_broad,
+											   bath_freq, tlist)
 
 	# Fitting a biexponential function
 	ck20, vk20 = biexp_fit(tlist, mats_data_zero)

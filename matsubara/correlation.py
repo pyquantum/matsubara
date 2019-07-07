@@ -164,7 +164,7 @@ def biexp_fit_constrained(tlist, ydata, w, lam, gamma, w0,
     vk = np.array([v1, v2])
     return ck, vk
 
-def underdamped_brownian(w, coup_strength, cav_broad, cav_freq):
+def underdamped_brownian(w, coup_strength, bath_broad, bath_freq):
     """
     Calculates the underdamped Brownian motion spectral density characterizing
     a bath of harmonic oscillators.
@@ -177,11 +177,11 @@ def underdamped_brownian(w, coup_strength, cav_broad, cav_freq):
     coup_strength: float
         The coupling strength parameter.
 
-    cav_broad: float
+    bath_broad: float
         A parameter characterizing the FWHM of the spectral density, i.e.,
         the cavity broadening.
 
-    cav_freq: float
+    bath_freq: float
         The cavity frequency.
 
     Returns
@@ -189,9 +189,9 @@ def underdamped_brownian(w, coup_strength, cav_broad, cav_freq):
     spectral_density: ndarray
         The spectral density for specified parameters.
     """
-    w0 = cav_freq
+    w0 = bath_freq
     lam = coup_strength
-    gamma = cav_broad
+    gamma = bath_broad
     omega = np.sqrt(w0**2 - (gamma/2)**2)
     a = omega + 1j*gamma/2.
     aa = np.conjugate(a)
@@ -293,7 +293,7 @@ def coth(x):
     return 1/np.tanh(x)
 
 
-def nonmatsubara_exponents(coup_strength, cav_broad, cav_freq, beta):
+def nonmatsubara_exponents(coup_strength, bath_broad, bath_freq, beta):
     """
     Get the exponentials for the correlation function for non-matsubara
     terms for the underdamped Brownian motion spectral density . (t>=0)
@@ -303,11 +303,11 @@ def nonmatsubara_exponents(coup_strength, cav_broad, cav_freq, beta):
     coup_strength: float
         The coupling strength parameter.
 
-    cav_broad: float
+    bath_broad: float
         A parameter characterizing the FWHM of the spectral density, i.e.,
         the cavity broadening.
 
-    cav_freq: float
+    bath_freq: float
         The cavity frequency.
 
     beta: float
@@ -321,9 +321,9 @@ def nonmatsubara_exponents(coup_strength, cav_broad, cav_freq, beta):
     vk: ndarray
         A 1D array with the frequencies
     """
-    w0 = cav_freq
+    w0 = bath_freq
     lam = coup_strength
-    gamma = cav_broad
+    gamma = bath_broad
 
     omega = np.sqrt(w0**2 - (gamma/2)**2)
     a = omega + 1j*gamma/2.
@@ -340,7 +340,7 @@ def nonmatsubara_exponents(coup_strength, cav_broad, cav_freq, beta):
     return coeff*ck, vk
 
 
-def matsubara_exponents(coup_strength, cav_broad, cav_freq, beta, N_exp):
+def matsubara_exponents(coup_strength, bath_broad, bath_freq, beta, N_exp):
     """
     Calculates the exponentials for the correlation function for matsubara
     terms. (t>=0)
@@ -350,11 +350,11 @@ def matsubara_exponents(coup_strength, cav_broad, cav_freq, beta, N_exp):
     coup_strength: float
         The coupling strength parameter.
 
-    cav_broad: float
+    bath_broad: float
         A parameter characterizing the FWHM of the spectral density, i.e.,
         the cavity broadening.
 
-    cav_freq: float
+    bath_freq: float
         The cavity frequency.
 
     beta: float
@@ -372,8 +372,8 @@ def matsubara_exponents(coup_strength, cav_broad, cav_freq, beta, N_exp):
         A 1D array with the frequencies
     """
     lam = coup_strength
-    gamma = cav_broad
-    w0 = cav_freq
+    gamma = bath_broad
+    w0 = bath_freq
     N_exp = N_exp
 
     omega = np.sqrt(w0**2 - (gamma/2)**2)
@@ -386,13 +386,13 @@ def matsubara_exponents(coup_strength, cav_broad, cav_freq, beta, N_exp):
     return coeff*ck, vk
 
 
-def _matsubara_zero_integrand(t, coup_strength, cav_broad, cav_freq):
+def _matsubara_zero_integrand(t, coup_strength, bath_broad, bath_freq):
     """
     Integral for the zero temperature Matsubara exponentials.
     """
     lam = coup_strength
-    gamma = cav_broad
-    w0 = cav_freq
+    gamma = bath_broad
+    w0 = bath_freq
 
     omega = np.sqrt(w0**2 - (gamma/2)**2)
     a = omega + 1j*gamma/2.
@@ -404,7 +404,7 @@ def _matsubara_zero_integrand(t, coup_strength, cav_broad, cav_freq):
     return quad(integrand, 0.0, np.inf)[0]
 
 
-def matsubara_zero_analytical(coup_strength, cav_broad, cav_freq, tlist):
+def matsubara_zero_analytical(coup_strength, bath_broad, bath_freq, tlist):
     """
     Calculates the analytical zero temperature value for Matsubara exponents.
 
@@ -416,11 +416,11 @@ def matsubara_zero_analytical(coup_strength, cav_broad, cav_freq, tlist):
     coup_strength: float
         The coupling strength parameter.
 
-    cav_broad: float
+    bath_broad: float
         A parameter characterizing the FWHM of the spectral density, i.e.,
         the cavity broadening.
 
-    cav_freq: float
+    bath_freq: float
         The cavity frequency.
 
     Returns
@@ -429,13 +429,13 @@ def matsubara_zero_analytical(coup_strength, cav_broad, cav_freq, tlist):
         The value of the integration at time "t".
     """
     lam = coup_strength
-    gamma = cav_broad
-    w0 = cav_freq
+    gamma = bath_broad
+    w0 = bath_freq
 
     return np.array([_matsubara_zero_integrand(t, coup_strength, gamma, w0) for t in tlist])
 
 
-def _S(w, coup_strength, cav_broad, cav_freq, beta):
+def _S(w, coup_strength, bath_broad, bath_freq, beta):
     """
     Calculates the symmetric part of the spectrum for underdamped brownian motion
     spectral density.
@@ -448,11 +448,11 @@ def _S(w, coup_strength, cav_broad, cav_freq, beta):
     coup_strength: float
         The coupling strength parameter.
 
-    cav_broad: float
+    bath_broad: float
         A parameter characterizing the FWHM of the spectral density, i.e.,
         the cavity broadening.
 
-    cav_freq: float
+    bath_freq: float
         The cavity frequency.
 
     Returns
@@ -461,8 +461,8 @@ def _S(w, coup_strength, cav_broad, cav_freq, beta):
         The value of the integration at time "t".
     """
     lam = coup_strength
-    gamma = cav_broad
-    w0 = cav_freq
+    gamma = bath_broad
+    w0 = bath_freq
 
     omega = np.sqrt(w0**2 - (gamma/2)**2)
     a = omega + 1j*gamma/2.
@@ -474,7 +474,7 @@ def _S(w, coup_strength, cav_broad, cav_freq, beta):
     return prefactor*(t1 - t2)
 
 
-def _A(w, coup_strength, cav_broad, cav_freq, beta):
+def _A(w, coup_strength, bath_broad, bath_freq, beta):
     """
     Calculates the anti-symmetric part of the spectrum for underdamped
     Brownian motion spectral density.
@@ -487,11 +487,11 @@ def _A(w, coup_strength, cav_broad, cav_freq, beta):
     coup_strength: float
         The coupling strength parameter.
 
-    cav_broad: float
+    bath_broad: float
         A parameter characterizing the FWHM of the spectral density, i.e.,
         the cavity broadening.
 
-    cav_freq: float
+    bath_freq: float
         The cavity frequency.
 
     Returns
@@ -500,8 +500,8 @@ def _A(w, coup_strength, cav_broad, cav_freq, beta):
         The value of the integration at time "t".
     """
     lam = coup_strength
-    gamma = cav_broad
-    w0 = cav_freq
+    gamma = bath_broad
+    w0 = bath_freq
 
     omega = np.sqrt(w0**2 - (gamma/2)**2)
     a = omega + 1j*gamma/2.
@@ -511,7 +511,7 @@ def _A(w, coup_strength, cav_broad, cav_freq, beta):
     return prefactor*t1
 
 
-def spectrum_matsubara(w, coup_strength, cav_broad, cav_freq, beta):
+def spectrum_matsubara(w, coup_strength, bath_broad, bath_freq, beta):
     """
     Calculates the Matsubara part of the spectrum.
     
@@ -523,11 +523,11 @@ def spectrum_matsubara(w, coup_strength, cav_broad, cav_freq, beta):
     coup_strength: float
         The coupling strength parameter.
 
-    cav_broad: float
+    bath_broad: float
         A parameter characterizing the FWHM of the spectral density, i.e.,
         the cavity broadening.
 
-    cav_freq: float
+    bath_freq: float
         The cavity frequency.
 
     Returns
@@ -536,13 +536,13 @@ def spectrum_matsubara(w, coup_strength, cav_broad, cav_freq, beta):
         The value of the integration at time "t".
     """
     lam = coup_strength
-    gamma = cav_broad
-    w0 = cav_freq
-    return (-_S(w, coup_strength, cav_broad, cav_freq, beta) \
-        + _A(w, coup_strength, cav_broad, cav_freq, beta)*coth(beta*w/2))
+    gamma = bath_broad
+    w0 = bath_freq
+    return (-_S(w, coup_strength, bath_broad, bath_freq, beta) \
+        + _A(w, coup_strength, bath_broad, bath_freq, beta)*coth(beta*w/2))
 
 
-def spectrum_non_matsubara(w, coup_strength, cav_broad, cav_freq, beta):
+def spectrum_non_matsubara(w, coup_strength, bath_broad, bath_freq, beta):
     """
     Calculates the non Matsubara part of the spectrum.
     
@@ -561,11 +561,11 @@ def spectrum_non_matsubara(w, coup_strength, cav_broad, cav_freq, beta):
         Inverse temperature (1/kT) normalized to qubit frequency.
         deafult: inf
     """
-    return (_S(w, coup_strength, cav_broad, cav_freq, beta) \
-        + _A(w, coup_strength, cav_broad, cav_freq, beta))
+    return (_S(w, coup_strength, bath_broad, bath_freq, beta) \
+        + _A(w, coup_strength, bath_broad, bath_freq, beta))
 
 
-def spectrum(w, coup_strength, cav_broad, cav_freq, beta):
+def spectrum(w, coup_strength, bath_broad, bath_freq, beta):
     """
     Calculates the full spectrum for the spectral density.
 
@@ -584,5 +584,5 @@ def spectrum(w, coup_strength, cav_broad, cav_freq, beta):
         Inverse temperature (1/kT) normalized to qubit frequency.
         deafult: inf
     """
-    return (spectrum_matsubara(w, coup_strength, cav_broad, cav_freq, beta) \
-        + spectrum_non_matsubara(w, coup_strength, cav_broad, cav_freq, beta))
+    return (spectrum_matsubara(w, coup_strength, bath_broad, bath_freq, beta) \
+        + spectrum_non_matsubara(w, coup_strength, bath_broad, bath_freq, beta))

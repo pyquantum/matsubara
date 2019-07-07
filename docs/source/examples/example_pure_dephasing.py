@@ -15,7 +15,7 @@ from matsubara.correlation import (biexp_fit, nonmatsubara_exponents, matsubara_
 import matplotlib.pyplot as plt
 
 
-coup_strength, cav_broad, cav_freq = .8, .4, 1.
+coup_strength, bath_broad, bath_freq = .8, .4, 1.
 
 tlist = np.linspace(0, 100, 200)
 
@@ -23,16 +23,16 @@ tlist = np.linspace(0, 100, 200)
 wq = 0
 # Zero temperature case
 beta = np.inf
-ck1, vk1 = nonmatsubara_exponents(coup_strength, cav_broad, cav_freq, beta)
+ck1, vk1 = nonmatsubara_exponents(coup_strength, bath_broad, bath_freq, beta)
 
-mats_data_zero = matsubara_zero_analytical(coup_strength, cav_broad, cav_freq, tlist)
+mats_data_zero = matsubara_zero_analytical(coup_strength, bath_broad, bath_freq, tlist)
 ck20, vk20 = biexp_fit(tlist, mats_data_zero)
 
 ck = np.concatenate([ck1, ck20])
 vk = np.concatenate([vk1, vk20])
 
-pd_analytical = pure_dephasing_evolution(tlist, coup_strength, cav_broad,
-                                         cav_freq, beta, wq)
+pd_analytical = pure_dephasing_evolution(tlist, coup_strength, bath_broad,
+                                         bath_freq, beta, wq)
 pd_numerical_fitting = pure_dephasing_evolution_analytical(tlist, wq, ck, vk)
 
 plt.plot(tlist, pd_analytical, color="b", label="Analytical integral")

@@ -8,7 +8,7 @@ from matsubara.correlation import underdamped_brownian, coth
 from scipy.integrate import quad
 
 
-def pure_dephasing_integrand(w, coup_strength, cav_broad, cav_freq, beta, t):
+def pure_dephasing_integrand(w, coup_strength, bath_broad, bath_freq, beta, t):
     """
     Calculates the pure dephasing integrand.
     
@@ -17,10 +17,10 @@ def pure_dephasing_integrand(w, coup_strength, cav_broad, cav_freq, beta, t):
     coup_strength: float
         The coupling strength parameter.
 
-    cav_broad: float
+    bath_broad: float
         A parameter characterizing the FWHM of the spectral density.
         
-    cav_freq: float
+    bath_freq: float
         The qubit frequency.
         
     beta: float
@@ -30,16 +30,16 @@ def pure_dephasing_integrand(w, coup_strength, cav_broad, cav_freq, beta, t):
         The time t.
     """
     fac = (1. - np.cos(w*t))*(coth(w*beta/2))/w**2
-    sd = -4*underdamped_brownian(w, coup_strength, cav_broad, cav_freq)
+    sd = -4*underdamped_brownian(w, coup_strength, bath_broad, bath_freq)
     return sd*fac
 
 
-def pure_dephasing_evolution(tlist, coup_strength, cav_broad, cav_freq, beta, w0):
+def pure_dephasing_evolution(tlist, coup_strength, bath_broad, bath_freq, beta, w0):
     """
     Compute the pure dephasing evolution using the numerical integrand.
     """
     integrand = lambda t: quad(pure_dephasing_integrand, 0.0, np.inf,
-                                args=(coup_strength, cav_broad, cav_freq, beta, t))
+                                args=(coup_strength, bath_broad, bath_freq, beta, t))
     evolution = np.array([np.exp(1j*w0*t + integrand(t)[0]/np.pi) for t in tlist])
     return evolution
 

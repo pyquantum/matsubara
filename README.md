@@ -1,12 +1,10 @@
 # matsubara
-## Virtual excitations in the ultra-strongly-coupled spin-boson model: physical results from unphysical modes
+## Modelling the ultra-strongly coupled spin-boson model with unphysical modes
 Neill Lambert, Shahnawaz Ahmed, Mauro Cirio, Franco Nori
 
-The is the code to reproduce the results in [arXiv:1903.05892](https://arxiv.org/abs/1903.05892). A special `matsubara.heom.HeomUB` class is provided to implement the Hierarchical Equations of Motion method adapted for the underdamped Brownian motion spectral density.
+The is the code to reproduce the results in [arXiv:1903.05892](https://arxiv.org/abs/1903.05892). A special `matsubara.heom.HeomUB` class is provided to implement the Hierarchical Equations of Motion method adapted for the underdamped Brownian motion spectral density. We focus on the zero temperature case where the correlation function can be expressed using four exponents - two "non-Matsubara" and two "Matsubara" exponents. The "Matsubara" exponents give rise to seemingly unphysical modes which nevertheless are essential to get correct physical results, e.g., virtual photon population. We also present a Reaction Coordinate method and a pseudomode approach to study the problem and show the crutial role of the Matsubara terms by effectively expressing them with a biexponential fit. 
 
-We focus on the zero temperature case where the correlation function can be expressed using four exponents.
-
-Documentation, installation instructions and several examples are available at: (matsubara.readthedocs.io)
+Documentation, installation instructions and several examples are available at: [matsubara.readthedocs.io](matsubara.readthedocs.io)
 
 # Installation
 The code is in development and can be used by cloning the repository and performing an in-place installation using python.
@@ -21,6 +19,7 @@ conda install -c conda-forge numpy scipy qutip
 ```
 
 # Examples
+
 In `matsubara/docs/source/examples/` there are several examples from the paper which can be easily
 reproduced. The basic calcalation of the Matsubara and non Matsubara modes can be done in the following way:
 ```python
@@ -28,7 +27,7 @@ from matsubara.correlation import (nonmatsubara_exponents,
                                    matsubara_zero_exponents,
                                    biexp_fit, sum_of_exponentials)
 
-coup_strength, cav_broad, cav_freq = 0.2, 0.05, 1.
+coup_strength, bath_broad, bath_freq = 0.2, 0.05, 1.
 tlist = np.linspace(0, 100, 1000)
 
 # Zero temperature case beta = 1/kT

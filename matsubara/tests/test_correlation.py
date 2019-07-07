@@ -153,20 +153,20 @@ def test_spectrum():
     """
     correlation: Tests the Matsubara and non Matsubara spectrum.
     """
-    cav_freq = 1.
-    cav_broad = 0.5
+    bath_freq = 1.
+    bath_broad = 0.5
     coup_strength = 1
 
     # High temperature case
     beta = 0.01
     w = np.linspace(-5, 10, 200)
-    s_matsu = spectrum_matsubara(w, coup_strength, cav_broad, cav_freq, beta)
-    s_full = spectrum(w, coup_strength, cav_broad, cav_freq, beta)
+    s_matsu = spectrum_matsubara(w, coup_strength, bath_broad, bath_freq, beta)
+    s_full = spectrum(w, coup_strength, bath_broad, bath_freq, beta)
     s_nonmatsu = spectrum_non_matsubara(w, coup_strength,
-                                        cav_broad, cav_freq,
+                                        bath_broad, bath_freq,
                                         beta)
     s_nonmatsu_neg = spectrum_non_matsubara(-w, coup_strength,
-                                            cav_broad, cav_freq,
+                                            bath_broad, bath_freq,
                                             beta)
     assert_array_almost_equal(s_full, s_nonmatsu)
 
@@ -178,10 +178,10 @@ def test_spectrum():
     # Low temperature case
     beta = 100
     w = np.linspace(-5, 10, 200)
-    s_matsu = spectrum_matsubara(w, coup_strength, cav_broad, cav_freq, beta)
-    s_full = spectrum(w, coup_strength, cav_broad, cav_freq, beta)
+    s_matsu = spectrum_matsubara(w, coup_strength, bath_broad, bath_freq, beta)
+    s_full = spectrum(w, coup_strength, bath_broad, bath_freq, beta)
     s_nonmatsu = spectrum_non_matsubara(w, coup_strength,
-                                        cav_broad, cav_freq,
+                                        bath_broad, bath_freq,
                                         beta)
     residue = np.abs(s_full - s_nonmatsu)
     assert_(residue.all() != 0.)

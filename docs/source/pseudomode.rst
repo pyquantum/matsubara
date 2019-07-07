@@ -21,16 +21,16 @@ Pseudomodes
 	wq = 1.
 	delta = 0.
 	beta = np.inf
-	coup_strength, cav_broad, cav_freq = 0.2, 0.05, 1.
+	coup_strength, bath_broad, bath_freq = 0.2, 0.05, 1.
 	tlist = np.linspace(0, 200, 1000)
 	Ncav = 4
 
-	mats_data_zero = matsubara_zero_analytical(coup_strength, cav_broad,
-											   cav_freq, tlist)
+	mats_data_zero = matsubara_zero_analytical(coup_strength, bath_broad,
+											   bath_freq, tlist)
 	# Fitting a biexponential function
 	ck20, vk20 = biexp_fit(tlist, mats_data_zero)
 
-	omega = np.sqrt(cav_freq**2 - (cav_broad/2.)**2)
+	omega = np.sqrt(bath_freq**2 - (bath_broad/2.)**2)
 	lam_renorm = coup_strength**2/(2*omega)
 
 	lam2 = np.sqrt(lam_renorm)
@@ -46,7 +46,7 @@ Pseudomodes
 	psi0=tensor(initial_ket, basis(Ncav, 0))
 
 	options = Options(nsteps=1500, store_states=True, atol=1e-13, rtol=1e-13)
-	c_ops = [np.sqrt(cav_broad)*a]
+	c_ops = [np.sqrt(bath_broad)*a]
 	e_ops = [sz, ]
 	pseudomode_no_mats = mesolve(Hsys, psi0, tlist, c_ops, e_ops, options=options)
 	output = (pseudomode_no_mats.expect[0] + 1)/2
@@ -70,7 +70,7 @@ Pseudomodes
 	Hsys = Hsys + lam4*sx*(c + c.dag())
 
 	psi0 = tensor(initial_ket, basis(Ncav,0), basis(Ncav,0), basis(Ncav,0))
-	c_ops = [np.sqrt(cav_broad)*a, np.sqrt(-2*vk20[0])*b, np.sqrt(-2*vk20[1])*c]
+	c_ops = [np.sqrt(bath_broad)*a, np.sqrt(-2*vk20[0])*b, np.sqrt(-2*vk20[1])*c]
 	e_ops = [sz, ]
 	pseudomode_with_mats = mesolve(Hsys, psi0, tlist, c_ops, e_ops, options=options)
 	output2 = (pseudomode_with_mats.expect[0] + 1)/2
