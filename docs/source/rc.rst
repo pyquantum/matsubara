@@ -2,13 +2,12 @@
 Reaction Coordinate (RC)
 ########################
 
+In this example, we calculate dynamics of the spin-boson model using a
+Reaction Coordinate (RC) approach  corresponsing to two type of spectral densitities
+for the RC - flat bath (non Matsubara) and a Ohmic bath (Matsubara).
+
 .. code-block:: python
 
-	"""
-	Calculate dynamics of the spin-boson model using a Reaction Coordinate (RC)
-	approach corresponsing to two type of spectral densitities for the RC - flat
-	bath (non Matsubara) and a Ohmic bath (Matsubara)
-	"""
 	import numpy as np
 	from matsubara.correlation import (sum_of_exponentials, biexp_fit,
 	                                   bath_correlation, underdamped_brownian,

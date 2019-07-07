@@ -10,7 +10,7 @@ where F(t) is an integral which can be computed analytically in the zero tempera
 
 The exact evolution can be computed directly by a double integration of the correlation function from the underdamped Brownian motion spectral density. We can now compare both the results to see the error in the dynamics due to the fitting procedure.
 
-We switch to a frame rotating with the qubit frequency and can thus set it to zero to see the dynamics due to the interaction only.
+We switch to a frame rotating with the qubit frequency and can thus set it to zero to see the dynamics due to the interaction only and calculate the evolution in this example.
 
 .. code-block:: python
 

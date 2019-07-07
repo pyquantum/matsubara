@@ -2,6 +2,11 @@
 Matsubara correlation
 #####################
 
+In this example, we take the underdamped Brownian motion spectral density for a
+bath and calculate the Matsubara and non-Matsubara expoentials to express the 
+correlation function as a sum of four exponents.
+
+
 .. code-block:: python
 
 	import numpy as np

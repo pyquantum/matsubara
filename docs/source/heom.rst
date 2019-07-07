@@ -2,6 +2,9 @@
 Hierarchical Eq. of Motion (HEOM)
 #################################
 
+We can calculate the dynamics of the spin-boson model at zero temperature with the 
+Hierarchical Equations of Motion (HEOM) method in the following example.
+
 .. code-block:: python
 
 	import numpy as np

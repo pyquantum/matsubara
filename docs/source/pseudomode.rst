@@ -2,6 +2,9 @@
 Pseudomodes
 ###########
 
+In this example we show how a pseudomode approach can be used to calculate the correct
+evolution using the Matsubara modes.
+
 .. code-block:: python
 
 	import numpy as np
