@@ -17,7 +17,5 @@ A QuTiP plugin to study the spin-boson model in the Ultra-Strong Coupling limit 
    rc
    pure_dephasing
    virtualphotons
-   bib
    modules
-
-.. bibliography:: bibliography/main.bib
+   zzreferences

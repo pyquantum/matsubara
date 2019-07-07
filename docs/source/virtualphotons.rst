@@ -7,9 +7,6 @@ In the ultrastrong coupling regime where the qubit-environment coupling is compa
 
 In case of the pseudomode calculating the virtual photon population is a straight-forward calculation of the expectation of the bath operators. These are approximately the same as the dominant modes from Eq (19) in :cite:`lambert2019virtual` which can be supplied to `mesolve` as discussed in the previous examples.
 
-
-
-
 But this is not so obvious in the HEOM method. Here, the Auxiliary Density Operators (ADOs) of the evolution contain the information about the bath operators :cite:`zhu2012explicit`, :cite:`song2017hierarchical` and we have calculated them in Eq (20) of :cite:`lambert2019virtual`. Here we show how to extract them from the full HEOM evolution.
 
 .. code-block:: python
@@ -129,3 +126,4 @@ But this is not so obvious in the HEOM method. Here, the Auxiliary Density Opera
 
 
 .. image:: examples/plots/virtual_photon.png
+
