@@ -151,6 +151,42 @@ def _heom_number_enumerate(dims, excitations=None, state=None, idx=0):
                 yield s
 
 
+def get_aux_matrices(full, level, Nc, Nk):
+    """
+    Extracts the auxiliary matrices at a particular level
+    from the full hierarchy ADOs.
+    
+    Parameters
+    ----------
+    full: ndarray
+        A 2D array of the time evolution of the ADOs.
+    
+    level: int
+        The level of the hierarchy to get the ADOs.
+        
+    Nc: int
+        The hierarchy cutoff.
+    
+    k: int
+        The total number of exponentials used to express the correlation.
+    """
+    nstates, state2idx, idx2state =_heom_state_dictionaries([Nc + 1]*(Nk), Nc)
+    aux_indices = []
+    
+    aux_heom_indices = []
+    for stateid in state2idx:
+        if np.sum(stateid) == level:
+            aux_indices.append(state2idx[stateid])
+            aux_heom_indices.append(stateid)
+    full = np.array(full)
+    aux = []
+
+    for i in aux_indices:
+        qlist = [Qobj(full[k, i, :].reshape(2, 2).T) for k in range(len(full))]
+        aux.append(qlist)
+    return aux, aux_heom_indices
+
+
 class HeomUB():
     """
     The Heom class to tackle Heirarchy using the underdamped Brownian motion

@@ -2,7 +2,11 @@
 ## Modelling the ultra-strongly coupled spin-boson model with unphysical modes
 Neill Lambert, Shahnawaz Ahmed, Mauro Cirio, Franco Nori
 
-The is the code to reproduce the results in [arXiv:1903.05892](https://arxiv.org/abs/1903.05892). A special `matsubara.heom.HeomUB` class is provided to implement the Hierarchical Equations of Motion method adapted for the underdamped Brownian motion spectral density. We focus on the zero temperature case where the correlation function can be expressed using four exponents - two "non-Matsubara" and two "Matsubara" exponents. The "Matsubara" exponents give rise to seemingly unphysical modes which nevertheless are essential to get correct physical results, e.g., virtual photon population. We also present a Reaction Coordinate method and a pseudomode approach to study the problem and show the crutial role of the Matsubara terms by effectively expressing them with a biexponential fit. 
+The is the code to reproduce the results in [arXiv:1903.05892](https://arxiv.org/abs/1903.05892). A special `matsubara.heom.HeomUB` class is provided to implement the Hierarchical Equations of Motion method adapted for the underdamped Brownian motion spectral density.  
+
+We focus on the zero temperature case where the correlation function can be expressed using four exponents - two "non-Matsubara" and two "Matsubara" exponents. The "Matsubara" exponents give rise to seemingly unphysical modes which nevertheless are essential to get correct physical results, e.g., virtual photon population.  
+
+We also present a Reaction Coordinate method and a pseudomode approach to study the problem and show the crutial role of the Matsubara terms by effectively expressing them with a biexponential fit. 
 
 Documentation, installation instructions and several examples are available at: [matsubara.readthedocs.io](matsubara.readthedocs.io)
 
