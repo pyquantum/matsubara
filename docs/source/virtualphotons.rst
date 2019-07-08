@@ -3,11 +3,11 @@ Virtual photon population
 #########################
 
 
-In the ultrastrong coupling regime where the qubit-environment coupling is comparable to the bath frequencies, the hybridized system-environment “groundstate” (which in principle should be the steady-state at zero temperature) contains a finite population of photons which cannot be directly observed. These "virtual photon" populations can be extracted from the methods discussed here. The Matsubara terms are crucial to get the correct photon population in a single collective mode, and make sure that the population is trapped in the ground state.
+In the ultrastrong coupling regime (defined as where the qubit-environment coupling is on the order of the bath frequencies), the combined system-environment “groundstate”  contains a finite population of photons (and matter excitations) which in principle cannot be observed  The Matsubara terms are crucial to both calculated the correct properties of this ¨groundstate¨, and make sure that the virtual excitations are trapped in that ground state.
 
-In case of the pseudomode calculating the virtual photon population is a straight-forward calculation of the expectation of the bath operators. These are approximately the same as the dominant modes from Eq (19) in :cite:`lambert2019virtual` which can be supplied to `mesolve` as discussed in the previous examples.
+In case of the pseudomode we calculated the expectation of the non-Matsubara mode bath operators. 
 
-But this is not so obvious in the HEOM method. Here, the Auxiliary Density Operators (ADOs) of the evolution contain the information about the bath operators :cite:`zhu2012explicit`, :cite:`song2017hierarchical` and we have calculated them in Eq (20) of :cite:`lambert2019virtual`. Here we show how to extract them from the full HEOM evolution.
+For the HEOM method, the Auxiliary Density Operators (ADOs) of the evolution contain  information about the bath operators :cite:`zhu2012explicit`, :cite:`song2017hierarchical` and we have calculated them in Eq (18) of :cite:`lambert2019virtual`. Here we show how to extract them from the full HEOM evolution.
 
 .. code-block:: python
 

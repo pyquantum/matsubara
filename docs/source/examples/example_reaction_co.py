@@ -69,8 +69,8 @@ e_ops = [sz,]
 rc_ohmic_bath = mesolve(Hsys, psi0, tlist, c_ops, e_ops,options=options)
 output2 = (rc_ohmic_bath.expect[0] + 1)/2
 
-plt.plot(tlist, output2, color="r", label="RC (Ohmic bath - Matsubara)")
-plt.plot(tlist, output, color="b", label="RC (Flat bath - no Matsubara)")
+plt.plot(tlist, output2, color="b", label="RC (Ohmic bath - Matsubara)")
+plt.plot(tlist, output, color="r", label="RC (Flat bath - no Matsubara)")
 plt.xlabel("t ($1/\omega_0$)")
 plt.ylabel(r"$\langle 1 | \rho | 1 \rangle$")
 plt.legend()
