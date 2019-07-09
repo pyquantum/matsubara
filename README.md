@@ -7,7 +7,7 @@ The is the code to reproduce the results in [arXiv:1903.05892](https://arxiv.org
 
 We focus on the zero temperature case where the correlation function can be expressed using four exponents - two "non-Matsubara" and two "Matsubara" exponents. The "Matsubara" exponents give rise to seemingly unphysical modes which nevertheless are essential to get correct physical results, e.g., virtual photon population.  
 
-We also present a Reaction Coordinate method and a pseudomode approach to study the problem and show the crutial role of the Matsubara terms by effectively expressing them with a biexponential fit. 
+We also present a Reaction Coordinate method and a pseudomode approach to study the problem and show the crucial role of the Matsubara terms by effectively expressing them with a biexponential fit. 
 
 Documentation, installation instructions and several examples are available at: [matsubara.readthedocs.io](matsubara.readthedocs.io)
 
