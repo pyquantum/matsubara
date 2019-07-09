@@ -29,18 +29,22 @@ def pure_dephasing_integrand(w, coup_strength, bath_broad, bath_freq, beta, t):
     t: float
         The time t.
     """
-    fac = (1. - np.cos(w*t))*(coth(w*beta/2))/w**2
-    sd = -4*underdamped_brownian(w, coup_strength, bath_broad, bath_freq)
-    return sd*fac
+    fac = (1.0 - np.cos(w * t)) * (coth(w * beta / 2)) / w ** 2
+    sd = -4 * underdamped_brownian(w, coup_strength, bath_broad, bath_freq)
+    return sd * fac
 
 
 def pure_dephasing_evolution(tlist, coup_strength, bath_broad, bath_freq, beta, w0):
     """
     Compute the pure dephasing evolution using the numerical integrand.
     """
-    integrand = lambda t: quad(pure_dephasing_integrand, 0.0, np.inf,
-                                args=(coup_strength, bath_broad, bath_freq, beta, t))
-    evolution = np.array([np.exp(1j*w0*t + integrand(t)[0]/np.pi) for t in tlist])
+    integrand = lambda t: quad(
+        pure_dephasing_integrand,
+        0.0,
+        np.inf,
+        args=(coup_strength, bath_broad, bath_freq, beta, t),
+    )
+    evolution = np.array([np.exp(1j * w0 * t + integrand(t)[0] / np.pi) for t in tlist])
     return evolution
 
 
@@ -67,8 +71,11 @@ def pure_dephasing_evolution_analytical(tlist, w0, ck, vk):
     integral: float
         The value of the integral function at time t.
     """
-    evolution = np.array([np.exp(-1j*w0*t - correlation_integral(t, ck, vk)) for t in tlist])
+    evolution = np.array(
+        [np.exp(-1j * w0 * t - correlation_integral(t, ck, vk)) for t in tlist]
+    )
     return evolution
+
 
 def correlation_integral(t, ck, vk):
     """
@@ -100,9 +107,12 @@ def correlation_integral(t, ck, vk):
     integral: float
         The value of the integral function at time t.
     """
-    t1 = np.sum(np.multiply(np.divide(ck, vk**2), np.exp(vk*t) - 1))
-    t2 = np.sum(np.multiply(np.divide(np.conjugate(ck), np.conjugate(vk)**2),
-                            np.exp(np.conjugate(vk)*t) - 1))
-    t3 = np.sum((np.divide(ck, vk) + np.divide(np.conjugate(ck),
-                                               np.conjugate(vk)))*t)
-    return 2*(t1+t2-t3)
+    t1 = np.sum(np.multiply(np.divide(ck, vk ** 2), np.exp(vk * t) - 1))
+    t2 = np.sum(
+        np.multiply(
+            np.divide(np.conjugate(ck), np.conjugate(vk) ** 2),
+            np.exp(np.conjugate(vk) * t) - 1,
+        )
+    )
+    t3 = np.sum((np.divide(ck, vk) + np.divide(np.conjugate(ck), np.conjugate(vk))) * t)
+    return 2 * (t1 + t2 - t3)

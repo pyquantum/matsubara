@@ -170,9 +170,9 @@ def get_aux_matrices(full, level, Nc, Nk):
     k: int
         The total number of exponentials used to express the correlation.
     """
-    nstates, state2idx, idx2state =_heom_state_dictionaries([Nc + 1]*(Nk), Nc)
+    nstates, state2idx, idx2state = _heom_state_dictionaries([Nc + 1] * (Nk), Nc)
     aux_indices = []
-    
+
     aux_heom_indices = []
     for stateid in state2idx:
         if np.sum(stateid) == level:
@@ -187,7 +187,7 @@ def get_aux_matrices(full, level, Nc, Nk):
     return aux, aux_heom_indices
 
 
-class HeomUB():
+class HeomUB:
     """
     The Heom class to tackle Heirarchy using the underdamped Brownian motion
 
@@ -216,33 +216,32 @@ class HeomUB():
 		an optimization for the non Matsubara terms
     """
 
-    def __init__(self, hamiltonian, coupling, coup_strength,
-                 ck, vk, ncut, beta=np.inf):
+    def __init__(self, hamiltonian, coupling, coup_strength, ck, vk, ncut, beta=np.inf):
         self.hamiltonian = hamiltonian
         self.coupling = coupling
         self.ck, self.vk = ck, vk
         self.ncut = ncut
         self.kcut = len(ck)
-        nhe, he2idx, idx2he = _heom_state_dictionaries(
-            [ncut + 1] * (len(ck)), ncut)
+        nhe, he2idx, idx2he = _heom_state_dictionaries([ncut + 1] * (len(ck)), ncut)
 
         self.nhe = nhe
         self.he2idx = he2idx
         self.idx2he = idx2he
         self.N = self.hamiltonian.shape[0]
 
-        total_nhe = int(factorial(self.ncut + self.kcut) /
-                        (factorial(self.ncut) * factorial(self.kcut)))
+        total_nhe = int(
+            factorial(self.ncut + self.kcut)
+            / (factorial(self.ncut) * factorial(self.kcut))
+        )
         self.total_nhe = total_nhe
-        self.hshape = (total_nhe, self.N**2)
+        self.hshape = (total_nhe, self.N ** 2)
         self.L = liouvillian(self.hamiltonian, []).data
-        self.grad_shape = (self.N**2, self.N**2)
+        self.grad_shape = (self.N ** 2, self.N ** 2)
         self.spreQ = spre(coupling).data
         self.spostQ = spost(coupling).data
         self.L_helems = lil_matrix(
-            (total_nhe * self.N**2,
-             total_nhe * self.N**2),
-            dtype=np.complex)
+            (total_nhe * self.N ** 2, total_nhe * self.N ** 2), dtype=np.complex
+        )
         self.lam = coup_strength
         self.full_hierarchy = []
 
@@ -284,9 +283,9 @@ class HeomUB():
 
         # Fill in larger L
         nidx = self.he2idx[he_n]
-        block = self.N**2
+        block = self.N ** 2
         pos = int(nidx * (block))
-        self.L_helems[pos:pos + block, pos:pos + block] = L
+        self.L_helems[pos : pos + block, pos : pos + block] = L
 
     def grad_prev(self, he_n, k, prev_he):
         """
@@ -306,7 +305,7 @@ class HeomUB():
         elif k == 1:
             norm_prev = np.sqrt(float(nk) / abs(self.lam))
             op1 = -1j * norm_prev * (self.lam * spreQ)
-		# Matsubara terms
+        # Matsubara terms
         else:
             norm_prev = np.sqrt(float(nk) / abs(c[k]))
             op1 = -1j * norm_prev * (c[k] * (spreQ - spostQ))
@@ -314,10 +313,10 @@ class HeomUB():
         # Fill in larger L
         rowidx = self.he2idx[he_n]
         colidx = self.he2idx[prev_he]
-        block = self.N**2
+        block = self.N ** 2
         rowpos = int(rowidx * (block))
         colpos = int(colidx * (block))
-        self.L_helems[rowpos:rowpos + block, colpos:colpos + block] = op1
+        self.L_helems[rowpos : rowpos + block, colpos : colpos + block] = op1
 
     def grad_next(self, he_n, k, next_he):
         c = self.ck
@@ -331,7 +330,7 @@ class HeomUB():
         if k < 2:
             norm_next = np.sqrt(self.lam * (nk + 1))
             op2 = -1j * norm_next * (spreQ - spostQ)
-		# Non Matsubara terms
+        # Non Matsubara terms
         else:
             norm_next = np.sqrt(abs(c[k]) * (nk + 1))
             op2 = -1j * norm_next * (spreQ - spostQ)
@@ -339,10 +338,10 @@ class HeomUB():
         # Fill in larger L
         rowidx = self.he2idx[he_n]
         colidx = self.he2idx[next_he]
-        block = self.N**2
+        block = self.N ** 2
         rowpos = int(rowidx * (block))
         colpos = int(colidx * (block))
-        self.L_helems[rowpos:rowpos + block, colpos:colpos + block] = op2
+        self.L_helems[rowpos : rowpos + block, colpos : colpos + block] = op2
 
     def rhs(self, progress=None):
         """
@@ -388,10 +387,17 @@ class HeomUB():
         L_helems = self.L_helems.asformat("csr")
         r = ode(cy_ode_rhs)
         r.set_f_params(L_helems.data, L_helems.indices, L_helems.indptr)
-        r.set_integrator('zvode', method=options.method, order=options.order,
-                         atol=options.atol, rtol=options.rtol,
-                         nsteps=options.nsteps, first_step=options.first_step,
-                         min_step=options.min_step, max_step=options.max_step)
+        r.set_integrator(
+            "zvode",
+            method=options.method,
+            order=options.order,
+            atol=options.atol,
+            rtol=options.rtol,
+            nsteps=options.nsteps,
+            first_step=options.first_step,
+            min_step=options.min_step,
+            max_step=options.max_step,
+        )
 
         r.set_initial_value(rho_he, tlist[0])
         dt = np.diff(tlist)

@@ -1,4 +1,5 @@
 # matsubara
+
 ## Modelling the ultra-strongly coupled spin-boson model with unphysical modes
 Neill Lambert, Shahnawaz Ahmed, Mauro Cirio, Franco Nori
 
@@ -11,12 +12,7 @@ We also present a Reaction Coordinate method and a pseudomode approach to study 
 Documentation, installation instructions and several examples are available at: [matsubara.readthedocs.io](matsubara.readthedocs.io)
 
 # Installation
-The code can be used in development mode by cloning the repository and performing an "in-place" installation using python.
-```
-git clone https://github.com/pyquantum/matsubara.git
-cd matsubara
-python setup.py develop
-```
+
 Numpy, Scipy and QuTiP are required. Install them with conda or pip if you do not already have them. Also, matplotlib is required for plotting.  
 
 With [conda](https://www.anaconda.com/distribution/):
@@ -25,9 +21,17 @@ With [conda](https://www.anaconda.com/distribution/):
 conda install numpy scipy qutip matplotlib
 ```
 
-pip
+With pip
 ```
 pip install numpy scipy qutip matplotlib
+```
+
+The code can be used in development mode by cloning the repository and performing an "in-place" installation using python.
+
+```
+git clone https://github.com/pyquantum/matsubara.git
+cd matsubara
+python setup.py develop
 ```
 
 The "in-place" installation means that everything gets installed from the local folder you downloaded it to and you can the changes to the code there will be immediately reflected system-wide, e.g., if you insert a print statement in some part of the code and then run your code, you will see it immediately. We hope this will allow you to change things and develop the code further. Please open a pull request if you want to add some features or find a bug.
@@ -42,6 +46,7 @@ python matsubara/docs/source/examples/positivity_constraint.py
 ```
 
 The basic calcalation of the Matsubara and non Matsubara modes can be done in the following way:
+
 ```python
 from matsubara.correlation import (nonmatsubara_exponents,
                                    matsubara_zero_exponents,
@@ -69,7 +74,6 @@ Coefficients: [0., 0.02] [-0.00020, -0.00010]
 Frequencies: [-0.025 + 0.99j, -0.025-0.99j] [-1.61 - 0.32]
 ```
 ![](docs/source/examples/plots/matsfitting.png)
-
 
 # Documentation
 
