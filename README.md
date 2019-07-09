@@ -41,7 +41,7 @@ cd matsubara/docs/source/examples/
 python example_heom.py
 ```
 
-The basic calcalation of the Matsubara and non Matsubara modes can be done in the following way:
+The basic calculation of the Matsubara and non Matsubara modes can be done in the following way:
 
 ```python
 from matsubara.correlation import (nonmatsubara_exponents,
