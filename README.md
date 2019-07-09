@@ -13,31 +13,32 @@ Documentation, installation instructions and several examples are available at: 
 
 # Installation
 
-Numpy, Scipy and QuTiP are required. Install them with conda or pip if you do not already have them. Also, matplotlib is required for plotting.  
-
-
-```
-pip install numpy scipy qutip matplotlib
-```
-
-The code can be used in development mode by cloning the repository and performing an "in-place" installation using python.
+[QuTiP](qutip.org) is required to run the code. Also the standard python scientific computing packakges (numpy, scipy, cython, matplotlib) are necessary. If you have a working `qutip` installation then you can directly install the code in development mode by cloning the repository and performing an "in-place" installation using python. If not, then follow the instructions for installing qutip in a fresh environment.
 
 ```
 git clone https://github.com/pyquantum/matsubara.git
-cd matsubara
-python setup.py develop
+python matsubara/setup.py develop
 ```
 
-The "in-place" installation means that everything gets installed from the local folder you downloaded it to and you can the changes to the code there will be immediately reflected system-wide, e.g., if you insert a print statement in some part of the code and then run your code, you will see it immediately. We hope this will allow you to change things and develop the code further. Please open a pull request if you want to add some features or find a bug.
+The "in-place" installation means that everything gets installed from the local folder you downloaded and you can make changes to the code which will be immediately reflected system-wide, e.g., if you insert a print statement in some part of the code and then run any example, you can see it immediately. We hope this will allow users to change things and develop the code further. Please open a pull request if you want to add some features or find a bug.
+
+### QuTiP installation
+
+QuTiP can be installed in a fresh environment using the following commands:
+
+```
+pip install cython numpy scipy
+pip install qutip
+```
 
 # Examples
 
 In `matsubara/docs/source/examples/` there are several examples from the paper which can be easily
-reproduced. Just run them with python from the examples folder and the corresponding plots with be available in `matsubara/docs/source/examples/plots`.
+reproduced. Just run them using python from the examples folder and the corresponding plots with be available in `matsubara/docs/source/examples/plots`.
 
 ```
-cd docs/source/examples/
-python example_.py
+cd matsubara/docs/source/examples/
+python example_heom.py
 ```
 
 The basic calcalation of the Matsubara and non Matsubara modes can be done in the following way:
