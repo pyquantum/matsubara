@@ -29,7 +29,7 @@ where
 .. math::
 	 \tilde{X} = \sum_k \frac{g_k}{\sqrt{2\omega_k}} \left(b_k + b_k^{\dagger}\right)
 	 
-The underdamped Brownian motion spectral density
+We focus on the the underdamped Brownian motion spectral density defined as
 
 .. math::
 
