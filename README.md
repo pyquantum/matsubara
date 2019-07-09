@@ -15,13 +15,7 @@ Documentation, installation instructions and several examples are available at: 
 
 Numpy, Scipy and QuTiP are required. Install them with conda or pip if you do not already have them. Also, matplotlib is required for plotting.  
 
-With [conda](https://www.anaconda.com/distribution/):
 
-```
-conda install numpy scipy qutip matplotlib
-```
-
-With pip
 ```
 pip install numpy scipy qutip matplotlib
 ```
@@ -39,10 +33,11 @@ The "in-place" installation means that everything gets installed from the local 
 # Examples
 
 In `matsubara/docs/source/examples/` there are several examples from the paper which can be easily
-reproduced. Just run them with python by going to the folder and the corresponding plots with be available in `matsubara/docs/source/examples/plots`.
+reproduced. Just run them with python from the examples folder and the corresponding plots with be available in `matsubara/docs/source/examples/plots`.
 
 ```
-python matsubara/docs/source/examples/positivity_constraint.py
+cd docs/source/examples/
+python example_.py
 ```
 
 The basic calcalation of the Matsubara and non Matsubara modes can be done in the following way:
@@ -88,6 +83,6 @@ pip install sphinxcontrib-bibtex sphinx_rtd_theme
 
 Generate the docs:
 ```
-cd matsubara/docs/
+cd docs/
 make html
 ```
