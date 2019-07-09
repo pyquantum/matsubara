@@ -24,7 +24,11 @@ The spin-boson Hamiltonian
 
 	H = \frac{\omega_q}{2}\sigma_z + \frac{\Delta}{2}  \sigma_x + \sum_k \omega_k b_k^{\dagger}b_k + \sigma_z \tilde{X}
 
+where
 
+.. math::
+	 \tilde{X} = \sum_k \frac{g_k}{\sqrt{2\omega_k}} \left(b_k + b_k^{\dagger}\right)
+	 
 The underdamped Brownian motion spectral density
 
 .. math::
