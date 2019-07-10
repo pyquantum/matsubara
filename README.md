@@ -78,7 +78,7 @@ Frequencies: [-0.025+0.99968745j -0.025-0.99968745j] [-1.61341629 -0.3296043 ]
 
 # Documentation
 
-The documentation is available at [http://matsubara.readthedocs.io](matsubara.readthedocs.io) but you can also build your own local version by modifying the `.RST` files in `docs/source/` and running the `make html` command from the docs folder. The documentation is build using `sphinx`. Please make sure you have [sphinx](http://www.sphinx-doc.org/en/master/) installed along with the dependency [sphinxcontrib-bibtex](https://sphinxcontrib-bibtex.readthedocs.io/en/latest/) for generating the bibliography.
+The documentation is available at [http://matsubara.readthedocs.io](http://matsubara.readthedocs.io) but you can also build your own local version by modifying the `.RST` files in `docs/source/` and running the `make html` command from the docs folder. The documentation is build using `sphinx`. Please make sure you have [sphinx](http://www.sphinx-doc.org/en/master/) installed along with the dependency [sphinxcontrib-bibtex](https://sphinxcontrib-bibtex.readthedocs.io/en/latest/) for generating the bibliography.
 
 Install sphinx with:
 
