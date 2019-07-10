@@ -48,18 +48,20 @@ The basic calculation of the Matsubara and non Matsubara modes can be done in th
 
 ```python
 from matsubara.correlation import (nonmatsubara_exponents,
-                                   matsubara_zero_exponents,
+                                   matsubara_zero_analytical,
                                    biexp_fit, sum_of_exponentials)
 
+
+import numpy as np
 coup_strength, bath_broad, bath_freq = 0.2, 0.05, 1.
 tlist = np.linspace(0, 100, 1000)
 
 # Zero temperature case beta = 1/kT
 beta = np.inf
-ck1, vk1 = nonmatsubara_exponents(lam, gamma, w0, beta)
+ck1, vk1 = nonmatsubara_exponents(coup_strength, bath_broad, bath_freq, beta)
 
 # Analytical zero temperature calculation of the Matsubara correlation
-mats_data_zero = matsubara_zero_exponents(lam, gamma, w0, tlist)
+mats_data_zero = matsubara_zero_analytical(coup_strength, bath_broad, bath_freq, tlist)
 
 # Fitting a biexponential function
 ck20, vk20 = biexp_fit(tlist, mats_data_zero)
@@ -69,14 +71,14 @@ print("Frequencies:", vk1, vk20)
 ```
 
 ```
-Coefficients: [0., 0.02] [-0.00020, -0.00010]
-Frequencies: [-0.025 + 0.99j, -0.025-0.99j] [-1.61 - 0.32]
+Coefficients: [0.         0.02000625] [-0.00020758 -0.00010652]
+Frequencies: [-0.025+0.99968745j -0.025-0.99968745j] [-1.61341629 -0.3296043 ]
 ```
 ![](docs/source/examples/plots/matsfitting.png)
 
 # Documentation
 
-The documentation is available at [matsubara.readthedocs.io](matsubara.readthedocs.io) but you can also build your own local version by modifying the `.RST` files in `docs/source/` and running the `make html` command from the docs folder. The documentation is build using `sphinx`. Please make sure you have [sphinx](http://www.sphinx-doc.org/en/master/) installed along with the dependency [sphinxcontrib-bibtex](https://sphinxcontrib-bibtex.readthedocs.io/en/latest/) for generating the bibliography.
+The documentation is available at [http://matsubara.readthedocs.io](matsubara.readthedocs.io) but you can also build your own local version by modifying the `.RST` files in `docs/source/` and running the `make html` command from the docs folder. The documentation is build using `sphinx`. Please make sure you have [sphinx](http://www.sphinx-doc.org/en/master/) installed along with the dependency [sphinxcontrib-bibtex](https://sphinxcontrib-bibtex.readthedocs.io/en/latest/) for generating the bibliography.
 
 Install sphinx with:
 
