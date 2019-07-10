@@ -87,7 +87,8 @@ def biexp_fit(
 
 
 def biexp_fit_constrained(
-    tlist, ydata, w, lam, gamma, w0, method="trf", loss="cauchy", weight=1.0
+    tlist, ydata, w, coup_strength, bath_broad, bath_freq,
+    method="trf", loss="cauchy", weight=1.0
 ):
     """
     Fits a bi-exponential function : ck[0] e^(-vk[0] t) + ck[1] e^(-vk[1] t)
@@ -102,21 +103,23 @@ def biexp_fit_constrained(
     ydata: array
         The values for each time.
     
-    w: linspace array of frequencise
+    w: array
+        An array of frequencies.
     
-    lam: coupling strength of the non-Matsubara term
-    
-    gamma: width of the non-Matsubara term
-    
-    w0: resonance of the non-Matsubara term
+    coup_strength: float
+        The coupling strength parameter.
 
-    guess: array
-        The initial guess for the parameters [ck, vk]
+    bath_broad: float
+        A parameter characterizing the FWHM of the spectral density.
+        
+    bath_freq: float
+        The resonant frequency.
 
     method, loss: str
         One of the `scipy.least_sqares` method and loss.
         
-    weight: An optional weight for the cost function
+    weight: float
+        An optional weight for the cost function
 
     Returns
     -------
@@ -125,6 +128,9 @@ def biexp_fit_constrained(
     """
 
     data = ydata
+    w0 = bath_freq
+    lam = coup_strength
+    gamma = bath_broad
 
     ck_guess, vk_guess = biexp_fit(tlist, data)
 

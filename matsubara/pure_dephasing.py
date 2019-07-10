@@ -14,6 +14,9 @@ def pure_dephasing_integrand(w, coup_strength, bath_broad, bath_freq, beta, t):
     
     Parameters
     ----------
+    w: array
+        An array of frequencies.
+
     coup_strength: float
         The coupling strength parameter.
 
@@ -21,7 +24,7 @@ def pure_dephasing_integrand(w, coup_strength, bath_broad, bath_freq, beta, t):
         A parameter characterizing the FWHM of the spectral density.
         
     bath_freq: float
-        The qubit frequency.
+        The resonant frequency.
         
     beta: float
         The inverse temperature.
@@ -37,6 +40,26 @@ def pure_dephasing_integrand(w, coup_strength, bath_broad, bath_freq, beta, t):
 def pure_dephasing_evolution(tlist, coup_strength, bath_broad, bath_freq, beta, w0):
     """
     Compute the pure dephasing evolution using the numerical integrand.
+
+    Parameters
+    ----------
+    w: array
+        An array of frequencies.
+
+    coup_strength: float
+        The coupling strength parameter.
+
+    bath_broad: float
+        A parameter characterizing the FWHM of the spectral density.
+        
+    bath_freq: float
+        The qubit frequency.
+        
+    beta: float
+        The inverse temperature.
+
+    w0: float
+        The qubit frequency.
     """
     integrand = lambda t: quad(
         pure_dephasing_integrand,
@@ -54,10 +77,10 @@ def pure_dephasing_evolution_analytical(tlist, w0, ck, vk):
         
     Parameters
     ----------
-    t: float
-        A float specifying the time at which to calculate the integral.
+    tlist: array
+        An array of time steps to calculate the integral.
     
-    wq: float
+    w0: float
         The qubit frequency in the Hamiltonian.
 
     ck: ndarray
