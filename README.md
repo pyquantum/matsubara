@@ -12,7 +12,7 @@ We focus on the zero temperature case where the correlation function can be expr
 
 We also present a Reaction Coordinate method and a pseudomode approach to study the problem and show the crucial role of the Matsubara terms by effectively expressing them with a biexponential fit. 
 
-Documentation, installation instructions and several examples are available at: [matsubara.readthedocs.io](matsubara.readthedocs.io)
+Documentation, installation instructions and several examples are available at: [https://matsubara.readthedocs.io/en/latest/](https://matsubara.readthedocs.io/en/latest/)
 
 # Installation
 
