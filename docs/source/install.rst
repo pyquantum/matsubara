@@ -2,7 +2,9 @@
 Installation
 ############
 
-`QuTiP <http://www.qutip.org/>`_ is required to run the code. Also the standard python scientific computing packakges (numpy, scipy, cython, matplotlib) are necessary. Download the zipped version of the code, unzip it and install using the following command from your terminal from the matsubara folder::
+`QuTiP <http://www.qutip.org/>`_ is required to run the code. Also the standard python scientific computing packakges (numpy, scipy, cython, matplotlib) are necessary.
+
+Download or clone the code from https://github.com/pyquantum/matsubara and install using the following command from your terminal from the matsubara folder::
 
     python setup.py develop
     
