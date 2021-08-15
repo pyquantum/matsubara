@@ -6,7 +6,9 @@ Neill Lambert, Shahnawaz Ahmed, Mauro Cirio, Franco Nori
 The is the code to reproduce the results in:
 
 Lambert, N., Ahmed, S., Cirio, M. et al. Modelling the ultra-strongly coupled spin-boson model with unphysical modes. Nat Commun 10, 3721 (2019). (https://doi.org/10.1038/s41467-019-11656-1)[https://doi.org/10.1038/s41467-019-11656-1]
-[arXiv:1903.05892](https://arxiv.org/abs/1903.05892).
+
+
+arXiv link: [arXiv:1903.05892](https://arxiv.org/abs/1903.05892).
 
 A special `matsubara.heom.HeomUB` class is provided to implement the Hierarchical Equations of Motion method adapted for the underdamped Brownian motion spectral density.  
 
